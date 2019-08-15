@@ -22,11 +22,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Abrir Fragment
-        /*ComprarFragment comprarfragment = new ComprarFragment();
-        @SuppressLint("CommitTransaction") FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.recyclerBook, comprarfragment);
-        transaction.commit();*/
 
         //Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
