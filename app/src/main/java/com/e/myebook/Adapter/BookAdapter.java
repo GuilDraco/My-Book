@@ -16,6 +16,7 @@ import java.util.List;
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> {
 
     private List<Book> listaBooks;
+
     public BookAdapter(List<Book> listaBooks) {
         this.listaBooks = listaBooks;
     }
