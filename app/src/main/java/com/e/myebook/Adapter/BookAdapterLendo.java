@@ -1,4 +1,4 @@
-package com.e.myebook.Fragment;
+package com.e.myebook.Adapter;
 
 
 import android.annotation.SuppressLint;
@@ -8,10 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,17 +18,18 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-class BookAdapterLendo extends RecyclerView.Adapter<BookAdapterLendo.MyViewHolder> {
-
+public class BookAdapterLendo extends RecyclerView.Adapter<BookAdapterLendo.MyViewHolder> {
 
     private ArrayList<String> mTitle;
     private ArrayList<String> mImage;
+    private ArrayList<String> mAutor;
     private Context context;
 
-    BookAdapterLendo(Context context, ArrayList<String> mTitle, ArrayList<String> mImage) {
+    public BookAdapterLendo(Context context, ArrayList<String> mTitle, ArrayList<String> mImage, ArrayList<String> mAutor) {
         this.context = context;
         this.mTitle = mTitle;
         this.mImage = mImage;
+        this.mAutor = mAutor;
     }
 
     @NonNull
@@ -44,14 +43,16 @@ class BookAdapterLendo extends RecyclerView.Adapter<BookAdapterLendo.MyViewHolde
     public void onBindViewHolder(@NonNull BookAdapterLendo.MyViewHolder myViewHolder, @SuppressLint("RecyclerView") final int i) {
 
         myViewHolder.title.setText(mTitle.get(i));
+        myViewHolder.writer.setText(mAutor.get(i));
 
         String url = mImage.get(i);
         Picasso.get().load(url).into(myViewHolder.thumbnailHd);
 
-        myViewHolder.imageButton.setOnClickListener(new View.OnClickListener() {
+        myViewHolder.buttonFavorito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Favorito", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "" +
+                        "Favorito", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -64,20 +65,20 @@ class BookAdapterLendo extends RecyclerView.Adapter<BookAdapterLendo.MyViewHolde
     class MyViewHolder extends RecyclerView.ViewHolder{
 
         private TextView    title;
-        private TextView    price;
+        //private TextView    price;
         private TextView    writer;
         private ImageView   thumbnailHd;
-        private TextView    date;
-        private ImageButton imageButton;
+        //private TextView    date;
+        private ImageButton buttonFavorito;
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            title = itemView.findViewById(R.id.texttitle);
-            price = itemView.findViewById(R.id.textPrice);
-            writer = itemView.findViewById(R.id.textwriter);
+            title = itemView.findViewById(R.id.textTitle);
+            writer = itemView.findViewById(R.id.textWriter);
+            //price = itemView.findViewById(R.id.textPrice);
             thumbnailHd = itemView.findViewById(R.id.imageBook);
-            imageButton = itemView.findViewById(R.id.buttonFavorito);
+            buttonFavorito = itemView.findViewById(R.id.buttonFavorito);
 
         }
     }
