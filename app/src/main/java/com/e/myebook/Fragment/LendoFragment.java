@@ -1,8 +1,6 @@
 package com.e.myebook.Fragment;
 
-
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,19 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.e.myebook.Adapter.BookAdapter;
-import com.e.myebook.Api.ServiceBook;
-import com.e.myebook.Model.Book;
 import com.e.myebook.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -30,9 +19,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class LendoFragment extends Fragment {
 
-    private Retrofit retrofit;
     private RecyclerView recyclerBookLendo;
-    private List<Book> listaBooksLendo = new ArrayList<>();
+    private ArrayList<String> mTitle = new ArrayList<>();
+    private ArrayList<String> mImage = new ArrayList<>();
 
     public LendoFragment() {
         // Required empty public constructor
@@ -45,49 +34,27 @@ public class LendoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_lendo, container, false);
         recyclerBookLendo = view.findViewById(R.id.recyclerBooksComprados);
 
-        //Retrofit JSON
-        retrofit = new Retrofit.Builder()
-                .baseUrl("https://raw.githubusercontent.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        recuperarDados();
+        iniciarComprados();
 
         return view;
     }
 
-    private void recuperarDados(){
+    private void iniciarComprados(){
+        mTitle.add("Comprados");
+        mImage.add("https://images-na.ssl-images-amazon.com/images/I/51MRErYPVBL.jpg");
+        mTitle.add("Vendidos");
+        mImage.add("https://www.publishnews.com.br/estaticos/uploads/2015/08/SSD47DiXYZczBBE1UhKU68VrA4oTA6NAqe5Ic5C1TQhKgsEcy1Ch5BusqeN1UnCfhi4TqzETdEbcokXI.jpg");
 
-        ServiceBook serviceBook = retrofit.create(ServiceBook.class);
-        Call<List<Book>> call = serviceBook.recuperarBook();
-
-        call.enqueue(new Callback<List<Book>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<Book>> call, @NonNull Response<List<Book>> response) {
-                if(response.isSuccessful()){
-                    listaBooksLendo = response.body();
-
-                    assert listaBooksLendo != null;
-                    for (int i = 0; i<listaBooksLendo.size(); i++){
-                        configuraRecycleView();
-
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<List<Book>> call, @NonNull Throwable t) {
-
-            }
-        });
+        configuraRecycleView();
     }
 
     public void configuraRecycleView() {
 
         //Adapter
-        BookAdapterLendo bookAdapterLendo = new BookAdapterLendo(listaBooksLendo);
+        BookAdapterLendo bookAdapterLendo = new BookAdapterLendo(getContext(), mTitle, mImage);
 
         //Configuração do RecycleView
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerBookLendo.setHasFixedSize(true);
         recyclerBookLendo.setLayoutManager(layoutManager);
         recyclerBookLendo.setAdapter(bookAdapterLendo);
