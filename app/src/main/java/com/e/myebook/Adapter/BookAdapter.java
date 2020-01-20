@@ -27,6 +27,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.bookadapter, viewGroup, false);
         return new BookAdapter.MyViewHolder(view);
     }
+
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         Book book = listaBooks.get(i);
@@ -36,8 +37,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
 
         String url =  book.getThumbnailHd();
         Picasso.get().load(url).into(myViewHolder.thumbnailHd);
-
-
     }
 
     @Override
