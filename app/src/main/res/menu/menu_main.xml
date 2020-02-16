@@ -7,7 +7,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto" >
     android:id="@+id/search"
     android:icon="@drawable/ic_search_white_24dp"
     android:title="@string/pesquisar"
-    app:actionViewClass="android.support.v7.widget.SearchView"
+    app:actionViewClass="androidx.appcompat.widget.SearchView"
     app:showAsAction="collapseActionView|ifRoom"/>
 
 </menu>
