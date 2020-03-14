@@ -17,12 +17,12 @@ import com.squareup.picasso.Picasso;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> {
+public class BookAdapterComprar extends RecyclerView.Adapter<BookAdapterComprar.MyViewHolder> {
 
     private List<Book> listaBooks;
     private final RecyclerClickListener listener;
 
-    public BookAdapter(List<Book> listaBooks, RecyclerClickListener listener) {
+    public BookAdapterComprar(List<Book> listaBooks, RecyclerClickListener listener) {
         this.listaBooks = listaBooks;
         this.listener = listener;
     }
@@ -31,7 +31,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.bookadapter, viewGroup, false);
-        return new BookAdapter.MyViewHolder(view, listener);
+        return new BookAdapterComprar.MyViewHolder(view, listener);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
 
         final Book book = listaBooks.get(i);
         myViewHolder.title.setText(book.getTitle());
-        myViewHolder.price.setText(book.getPrice());
+        myViewHolder.price.setText(String.format("R$: %s", book.getPrice()));
         myViewHolder.writer.setText(book.getWriter());
 
         String url =  book.getThumbnailHd();

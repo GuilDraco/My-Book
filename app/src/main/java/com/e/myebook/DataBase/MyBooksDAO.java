@@ -7,10 +7,11 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.carrati.lebooks.Model.Book;
+import com.e.myebook.Model.Book;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class MyBooksDAO implements IMyBooksDAO{
 
@@ -28,7 +29,7 @@ public class MyBooksDAO implements IMyBooksDAO{
         ContentValues cv = new ContentValues();
         cv.put("title", book.getTitle() );
         cv.put("writer", book.getWriter() );
-        cv.put("thumb", book.getThumbURL() );
+        cv.put("thumb", book.getThumbnailHd() );
 
         try {
             writeDB.insert(DBHelper.TABELA_BOOKS, null, cv );
@@ -50,7 +51,6 @@ public class MyBooksDAO implements IMyBooksDAO{
                 new String[]{ title, writer });
 
         return count >= 1;
-        //Log.i("booklist", "inside procurarLivro");
     }
 
     @Override
@@ -69,7 +69,7 @@ public class MyBooksDAO implements IMyBooksDAO{
             Book book = new Book();
             book.setTitle( title );
             book.setWriter( writer );
-            book.setThumb( thumb );
+            book.setThumbnailHd( thumb );
 
             books.add( book );
             Log.i("myBooksDAO", book.getTitle() );
