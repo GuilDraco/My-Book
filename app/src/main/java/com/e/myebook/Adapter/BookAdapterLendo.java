@@ -13,39 +13,37 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.e.myebook.Model.Book;
 import com.e.myebook.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class BookAdapterLendo extends RecyclerView.Adapter<BookAdapterLendo.MyViewHolder> {
 
-    private ArrayList<String> mTitle;
-    private ArrayList<String> mImage;
-    private ArrayList<String> mAutor;
     private Context context;
+    private List<Book> listaBooks;
 
-    public BookAdapterLendo(Context context, ArrayList<String> mTitle, ArrayList<String> mImage, ArrayList<String> mAutor) {
+    public BookAdapterLendo(Context context, List<Book> listaBooks) {
         this.context = context;
-        this.mTitle = mTitle;
-        this.mImage = mImage;
-        this.mAutor = mAutor;
+        this.listaBooks = listaBooks;
     }
 
     @NonNull
     @Override
     public BookAdapterLendo.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.bookadapterlendo, viewGroup, false);
-        return new BookAdapterLendo.MyViewHolder(view);
+        return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BookAdapterLendo.MyViewHolder myViewHolder, @SuppressLint("RecyclerView") final int i) {
+    public void onBindViewHolder(@NonNull BookAdapterLendo.MyViewHolder myViewHolder, int position) {
+        Book book = listaBooks.get(position);
 
-        myViewHolder.title.setText(mTitle.get(i));
-        myViewHolder.writer.setText(mAutor.get(i));
+        myViewHolder.title.setText(book.getTitle());
+        myViewHolder.writer.setText(book.getWriter());
 
-        String url = mImage.get(i);
+        String url = book.getThumbnailHd();
         Picasso.get().load(url).into(myViewHolder.thumbnailHd);
 
         myViewHolder.buttonFavorito.setOnClickListener(new View.OnClickListener() {
@@ -59,10 +57,10 @@ public class BookAdapterLendo extends RecyclerView.Adapter<BookAdapterLendo.MyVi
 
     @Override
     public int getItemCount() {
-        return mTitle.size();
+        return listaBooks.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    static class MyViewHolder extends RecyclerView.ViewHolder{
 
         private TextView    title;
         //private TextView    price;
