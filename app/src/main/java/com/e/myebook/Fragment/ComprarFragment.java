@@ -1,6 +1,7 @@
 package com.e.myebook.Fragment;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -11,12 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.e.myebook.Adapter.BookAdapter;
+import com.e.myebook.Adapter.BookAdapterComprar;
 import com.e.myebook.Api.ServiceBook;
+import com.e.myebook.DataBase.MyBooksDAO;
 import com.e.myebook.Listener.RecyclerClickListener;
 import com.e.myebook.Model.Book;
 import com.e.myebook.R;
+import com.e.myebook.activity.MainActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -36,8 +40,10 @@ public class ComprarFragment extends Fragment {
 
     private Retrofit     retrofit;
     private RecyclerView recyclerBook;
-    private List<Book>   listaBooks = new ArrayList<>();
-    private BookAdapter adapter;
+    private List<Book> listaBooks = new ArrayList<>();
+    private BookAdapterComprar adapter;
+    private MyBooksDAO myBooksDAO;
+    private TextView bookstoreSaldo;
 
     public ComprarFragment() {
         // Required empty public constructor
@@ -46,11 +52,10 @@ public class ComprarFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_comprar, container, false);
 
         recyclerBook = view.findViewById(R.id.recyclerBook);
+        myBooksDAO = new MyBooksDAO(getActivity());
 
         //Retrofit JSON
         retrofit = new Retrofit.Builder()
@@ -60,6 +65,12 @@ public class ComprarFragment extends Fragment {
         recuperarDados();
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //bookstoreSaldo.setText("R$ " + preferences.getSaldo());
     }
 
     private void recuperarDados(){
@@ -90,7 +101,7 @@ public class ComprarFragment extends Fragment {
 
     private void configuraRecycleView() {
 
-        adapter = new BookAdapter(listaBooks, new RecyclerClickListener() {
+        adapter = new BookAdapterComprar(listaBooks, new RecyclerClickListener() {
             @Override
             public void onClick(int position) {
                 buyBook(position);
@@ -132,13 +143,16 @@ public class ComprarFragment extends Fragment {
                 //float res = saldo - price;
                 //if(res >= 0) {
                   //  preferences.setSaldo(String.format("%.0f", res));
-                    //myBooksDAO.salvar(listaBooks.get(position));
-                        removerItem(position);
+                    myBooksDAO.salvar(listaBooks.get(position));
+                    removerItem(position);
                    // bookstoreSaldo.setText(String.format("R$ %.0f", res));
                   //  Toast.makeText(getContext(), "Compra efetuada!", Toast.LENGTH_LONG).show();
                 //} else {
                     //Toast.makeText(getContext(), "Saldo insuficiente", Toast.LENGTH_LONG).show();
                 //}
+
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
             }
         });
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {

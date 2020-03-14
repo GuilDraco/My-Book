@@ -11,24 +11,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.e.myebook.Adapter.BookAdapterLendo;
+import com.e.myebook.DataBase.MyBooksDAO;
+import com.e.myebook.Model.Book;
 import com.e.myebook.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class LendoFragment extends Fragment {
 
     private RecyclerView recyclerBookLendo;
+    private List<Book> listaBooks = new ArrayList<>();
+    private MyBooksDAO myBooksDAO;
+    BookAdapterLendo bookAdapterLendo;
+
     private ArrayList<String> mTitle = new ArrayList<>();
     private ArrayList<String> mImage = new ArrayList<>();
     private ArrayList<String> mAutor = new ArrayList<>();
 
-    public LendoFragment() {
-        // Required empty public constructor
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -38,18 +38,17 @@ public class LendoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_lendo, container, false);
         recyclerBookLendo = view.findViewById(R.id.recyclerBooksComprados);
 
-        iniciarComprados();
+        myBooksDAO = new MyBooksDAO(getActivity());
         configuraRecycleView();
         return view;
     }
 
-    private void iniciarComprados() {
-    }
-
-    public void configuraRecycleView() {
+    private void configuraRecycleView() {
+        //listaBooks.clear();
+        listaBooks = myBooksDAO.listar();
 
         //Adapter
-        BookAdapterLendo bookAdapterLendo = new BookAdapterLendo(getContext(), mTitle, mImage, mAutor);
+        bookAdapterLendo = new BookAdapterLendo(getActivity(), listaBooks);
 
         //Configuração do RecycleView
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -58,7 +57,11 @@ public class LendoFragment extends Fragment {
         recyclerBookLendo.setAdapter(bookAdapterLendo);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
