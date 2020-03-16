@@ -43,11 +43,7 @@ public class ComprarFragment extends Fragment {
     private List<Book> listaBooks = new ArrayList<>();
     private BookAdapterComprar adapter;
     private MyBooksDAO myBooksDAO;
-    private TextView bookstoreSaldo;
-
-    public ComprarFragment() {
-        // Required empty public constructor
-    }
+    //private TextView bookstoreSaldo;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -81,14 +77,24 @@ public class ComprarFragment extends Fragment {
         call.enqueue(new Callback<List<Book>>() {
             @Override
             public void onResponse(@NonNull Call<List<Book>> call, @NonNull Response<List<Book>> response) {
-                if(response.isSuccessful()){
-                    listaBooks = response.body();
+                if (response.isSuccessful()) {
+                    List<Book> listItens = response.body();
+                    Book book = new Book();
 
-                    assert listaBooks != null;
-                    for (int i = 0; i<listaBooks.size(); i++){
-                        configuraRecycleView();
+                    assert listItens != null;
+                    for (Book itensBook : listItens) {
+                        book.setTitle(itensBook.getTitle());
+                        book.setPrice(itensBook.getPrice());
+                        book.setWriter(itensBook.getWriter());
+                        book.setThumbnailHd(itensBook.getThumbnailHd());
 
+                        //coloca na lista da loja caso não exista na lista de compras
+                        if (!myBooksDAO.procurarLivro(book)) {
+                            listaBooks.add(itensBook);
+                        }
                     }
+                    configuraRecycleView();
+                    adapter.notifyDataSetChanged();
                 }
             }
 

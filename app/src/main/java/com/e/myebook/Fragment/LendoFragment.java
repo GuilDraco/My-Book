@@ -1,8 +1,6 @@
 package com.e.myebook.Fragment;
 
-import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,22 +13,13 @@ import com.e.myebook.DataBase.MyBooksDAO;
 import com.e.myebook.Model.Book;
 import com.e.myebook.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LendoFragment extends Fragment {
 
     private RecyclerView recyclerBookLendo;
-    private List<Book> listaBooks = new ArrayList<>();
     private MyBooksDAO myBooksDAO;
-    BookAdapterLendo bookAdapterLendo;
 
-    private ArrayList<String> mTitle = new ArrayList<>();
-    private ArrayList<String> mImage = new ArrayList<>();
-    private ArrayList<String> mAutor = new ArrayList<>();
-
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,11 +33,10 @@ public class LendoFragment extends Fragment {
     }
 
     private void configuraRecycleView() {
-        //listaBooks.clear();
-        listaBooks = myBooksDAO.listar();
+        List<Book> listaBooks = myBooksDAO.listar();
 
         //Adapter
-        bookAdapterLendo = new BookAdapterLendo(getActivity(), listaBooks);
+        BookAdapterLendo bookAdapterLendo = new BookAdapterLendo(getActivity(), listaBooks);
 
         //Configuração do RecycleView
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
