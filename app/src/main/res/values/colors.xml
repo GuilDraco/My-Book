@@ -3,4 +3,11 @@
     <color name="colorPrimary">#03A9F4</color>
     <color name="colorPrimaryDark">#0288D1</color>
     <color name="colorAccent">#FF5722</color>
+
+    <color name="color_branco">#FFF</color>
+    <color name="color_preto">#000</color>
+    <color name="color_cinza">#CCCCCC</color>
+    <color name="color_amarelo">#EEAD2D</color>
+
+
 </resources>

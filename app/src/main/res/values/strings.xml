@@ -10,4 +10,25 @@
     <string name="r_100_00">R$ 100,00</string>
     <string name="saldo_geral">saldo geral</string>
     <string name="r_100">R$ 100</string>
+    <string name="info_intro_1">Tenha seus melhores livros em suas mãos!</string>
+    <string name="info_intro_2">Veja também eu seu computador!</string>
+    <string name="image_intro_1">img_intro_1</string>
+    <string name="image_intro_2">img_intro_2</string>
+
+    <string name="info_description_1">Leia seus livros favoritos onde estiver na palma de suas mãos, leve-os para qualquer lugar.</string>
+    <string name="info_description_2">Compartilhe a tela do seu aplicativo para poder ler seus livros também eu seu computador.</string>
+
+    <string name="txt_seu_usuario">Insira seu Usuário</string>
+    <string name="txt_crie_sua_conta">Crie sua conta grátis.</string>
+    <string name="txt_msg_cadastro">Junte-se a vários outros amantes de leitura nesse \nincrível app de e-book.</string>
+    <string name="txt_btn_cadastro">Cadastre-se</string>
+    <string name="txt_possuo_conta">Já possuo conta.</string>
+
+    <string name="txt_nome_usuario">Nome</string>
+    <string name="txt_email_usuario">E-mail</string>
+    <string name="txt_senha_usuario">Senha</string>
+    <string name="txt_btn_entrar">Entrar</string>
+    <string name="txt_btn_cadastrar">Cadastrar</string>
+
+
 </resources>

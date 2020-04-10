@@ -22,27 +22,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("My eBook");
-        setSupportActionBar(toolbar);
+        setButtonBackVisible(false);
+        setButtonNextVisible(false);
 
+        addSlide(new FragmentSlide.Builder()
+                .background(R.color.colorAccent)
+                .backgroundDark(R.color.colorPrimaryDark)
+                .fragment(R.layout.intro_1)
+                //.canGoBackward(true)
+                .build());
 
-        //Configuração Tabs
-        FragmentPagerItemAdapter adapterTabs = new FragmentPagerItemAdapter(
-                getSupportFragmentManager(),
-                FragmentPagerItems.with(this)
-                        .add("Lendo", LendoFragment.class)
-                        .add("Comprar", ComprarFragment.class)
-                        .create()
-        );
+        addSlide(new FragmentSlide.Builder()
+                .background(R.color.color_amarelo)
+                .backgroundDark(R.color.colorPrimaryDark)
+                .fragment(R.layout.intro_2)
+                //.canGoForward(true)
+                .build());
 
-        ViewPager viewPager = findViewById(R.id.viewpager);
-        viewPager.setAdapter( adapterTabs);
-
-        SmartTabLayout viewPagerTab = findViewById(R.id.viewpagertab);
-        viewPagerTab.setViewPager(viewPager);
-
+        addSlide(new FragmentSlide.Builder()
+                .background(R.color.colorPrimaryDark)
+                .backgroundDark(R.color.colorPrimaryDark)
+                .fragment(R.layout.intro_cadastro)
+                .canGoForward(false)
+                .build());
 
     }
 
@@ -52,5 +54,14 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main,menu);
         return super.onCreateOptionsMenu(menu);
+    }*/
+    }
+
+    public void btn_entrar(View view){
+        startActivity(new Intent(this, LoginActivity.class));
+    }
+
+    public void btn_cadastrar(View view){
+        startActivity(new Intent(this, CadastroActivity.class));
     }
 }
