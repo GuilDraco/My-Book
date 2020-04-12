@@ -16,7 +16,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthEmailException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
@@ -26,7 +25,7 @@ import java.util.Objects;
 public class CadastroActivity extends AppCompatActivity {
 
     private EditText campoNome, campoEmail, campoSenha;
-    private FirebaseAuth auth;
+    private FirebaseAuth firebaseAuth;
     private Usuario usuario;
 
     @Override
@@ -49,12 +48,12 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     public void cadastrarUsuario(){
-        auth = ConfiguracaoFireBase.getFirebaseAuth();
-        auth.createUserWithEmailAndPassword(usuario.getEmail(), usuario.getSenha()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        firebaseAuth = ConfiguracaoFireBase.getFirebaseAuth();
+        firebaseAuth.createUserWithEmailAndPassword(usuario.getEmail(), usuario.getSenha()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(CadastroActivity.this, "Tawdammmm", Toast.LENGTH_LONG).show();
+                    finish();
                 }else{
                     String excessao;
 
