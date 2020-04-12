@@ -1,26 +1,22 @@
 package com.e.myebook.activity;
 
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
-import com.e.myebook.Fragment.ComprarFragment;
-import com.e.myebook.Fragment.LendoFragment;
+import android.view.View;
+
 import com.e.myebook.R;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
+import com.heinrichreimersoftware.materialintro.app.IntroActivity;
+import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
 
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends IntroActivity {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
 
         setButtonBackVisible(false);
         setButtonNextVisible(false);
@@ -54,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main,menu);
         return super.onCreateOptionsMenu(menu);
-    }*/
     }
 
     public void btn_entrar(View view){
