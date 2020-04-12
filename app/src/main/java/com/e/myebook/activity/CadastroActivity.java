@@ -25,7 +25,6 @@ import java.util.Objects;
 public class CadastroActivity extends AppCompatActivity {
 
     private EditText campoNome, campoEmail, campoSenha;
-    private FirebaseAuth firebaseAuth;
     private Usuario usuario;
 
     @Override
@@ -48,7 +47,7 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     public void cadastrarUsuario(){
-        firebaseAuth = ConfiguracaoFireBase.getFirebaseAuth();
+        FirebaseAuth firebaseAuth = ConfiguracaoFireBase.getFirebaseAuth();
         firebaseAuth.createUserWithEmailAndPassword(usuario.getEmail(), usuario.getSenha()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {

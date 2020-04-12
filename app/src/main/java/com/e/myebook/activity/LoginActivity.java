@@ -19,17 +19,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText campoEmail, campoSenha;
-    private Button btnEntrar;
     private Usuario usuario;
-    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if(!txtEmail.isEmpty()){
                 if(!txtSenha.isEmpty()){
-                    Usuario usuario = new Usuario();
+                    usuario = new Usuario();
                     usuario.setEmail(txtEmail);
                     usuario.setSenha(txtSenha);
 
@@ -68,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void validarLogin(){
-        firebaseAuth = ConfiguracaoFireBase.getFirebaseAuth();
+        FirebaseAuth firebaseAuth = ConfiguracaoFireBase.getFirebaseAuth();
         firebaseAuth.signInWithEmailAndPassword(usuario.getEmail(), usuario.getSenha()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
