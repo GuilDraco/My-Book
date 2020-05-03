@@ -8,19 +8,26 @@ import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.e.myebook.Adapter.BookAdapterComprar;
 import com.e.myebook.Api.ServiceBook;
+import com.e.myebook.DataBase.Base64Custom;
 import com.e.myebook.DataBase.MyBooksDAO;
 import com.e.myebook.Listener.RecyclerClickListener;
 import com.e.myebook.Model.Book;
+import com.e.myebook.Model.Usuario;
 import com.e.myebook.R;
-import com.e.myebook.activity.MainActivity;
+import com.e.myebook.activity.BaseActivity;
+import com.e.myebook.activity.Config.ConfiguracaoFireBase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -43,7 +50,13 @@ public class ComprarFragment extends Fragment {
     private List<Book> listaBooks = new ArrayList<>();
     private BookAdapterComprar adapter;
     private MyBooksDAO myBooksDAO;
-    //private TextView bookstoreSaldo;
+
+    private DatabaseReference fireBaseReference = ConfiguracaoFireBase.getFirebaseDatabase();
+    private FirebaseAuth firebaseAuth = ConfiguracaoFireBase.getFirebaseAuth();
+
+    private Usuario usuario = new Usuario();
+    private Double despesaTotal;
+    private Double despesaGerada;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -61,12 +74,6 @@ public class ComprarFragment extends Fragment {
         recuperarDados();
 
         return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        //bookstoreSaldo.setText("R$ " + preferences.getSaldo());
     }
 
     private void recuperarDados(){
@@ -144,20 +151,22 @@ public class ComprarFragment extends Fragment {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //float saldo = Float.valueOf(preferences.getSaldo());
-                //float price = Float.valueOf(listaBooks.get(position).getPrice());
-                //float res = saldo - price;
-                //if(res >= 0) {
-                  //  preferences.setSaldo(String.format("%.0f", res));
+
+                despesaTotal = usuario.getReceitaTotal();
+                despesaGerada = listaBooks.get(position).getPrice();
+                double despesaAtualizada = despesaTotal - despesaGerada;
+
+                if(despesaAtualizada >= 0) {
+                    atualizarDespesas(despesaAtualizada);
                     myBooksDAO.salvar(listaBooks.get(position));
                     removerItem(position);
-                   // bookstoreSaldo.setText(String.format("R$ %.0f", res));
-                  //  Toast.makeText(getContext(), "Compra efetuada!", Toast.LENGTH_LONG).show();
-                //} else {
-                    //Toast.makeText(getContext(), "Saldo insuficiente", Toast.LENGTH_LONG).show();
-                //}
 
-                Intent intent = new Intent(getActivity(), MainActivity.class);
+                    Toast.makeText(getContext(), "Compra efetuada!", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "Saldo insuficiente", Toast.LENGTH_LONG).show();
+                }
+
+                Intent intent = new Intent(getActivity(), BaseActivity.class);
                 startActivity(intent);
             }
         });
@@ -168,5 +177,16 @@ public class ComprarFragment extends Fragment {
             }
         });
         builder.create().show();
+    }
+
+    private void atualizarDespesas(Double despesa){
+        String emailUsuario = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail();
+        assert emailUsuario != null;
+
+        String idUsuario = Base64Custom.codificarBase64(emailUsuario);
+        DatabaseReference usuarioRef = fireBaseReference.child("usuarios")
+                .child(idUsuario);
+
+        usuarioRef.child("receitaTotal").setValue(despesa);
     }
 }

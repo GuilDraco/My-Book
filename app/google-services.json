@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "952091684435-npu08ds4mvp6s8i956cgflme4qtjq2nb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.e.myebook",
+            "certificate_hash": "651ddc4d02f6b1b47f0f009f57171e6846173073"
+          }
+        },
+        {
           "client_id": "952091684435-e5r59fclcbft9po01n8kh55tqod5od4k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

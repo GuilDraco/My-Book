@@ -17,7 +17,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/txtNomeUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/carregando"
@@ -26,7 +26,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/txtReceitaTotal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/r_100"

@@ -2,11 +2,9 @@ package com.e.myebook.Model;
 
 public class Book {
     private String title;
-    private String price;
+    private Double price;
     private String writer;
     private String thumbnailHd;
-    //private String date;
-
 
     public String getTitle() {
         return title;
@@ -16,11 +14,11 @@ public class Book {
         this.title = title;
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

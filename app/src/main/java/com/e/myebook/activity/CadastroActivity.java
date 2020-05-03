@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.e.myebook.DataBase.Base64Custom;
 import com.e.myebook.Model.Usuario;
 import com.e.myebook.R;
 import com.e.myebook.activity.Config.ConfiguracaoFireBase;
@@ -52,6 +53,10 @@ public class CadastroActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+                    String idUsuario = Base64Custom.codificarBase64(usuario.getEmail());
+                    usuario.setIdUsuario(idUsuario);
+                    usuario.salvar();
+
                     finish();
                 }else{
                     String excessao;
@@ -86,6 +91,7 @@ public class CadastroActivity extends AppCompatActivity {
                         usuario.setNome(txtNome);
                         usuario.setEmail(txtEmail);
                         usuario.setSenha(txtSenha);
+
                         cadastrarUsuario();
 
                     }else{

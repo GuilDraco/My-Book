@@ -31,7 +31,7 @@ public class BookAdapterComprar extends RecyclerView.Adapter<BookAdapterComprar.
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.bookadapter, viewGroup, false);
-        return new BookAdapterComprar.MyViewHolder(view, listener);
+        return new MyViewHolder(view, listener);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class BookAdapterComprar extends RecyclerView.Adapter<BookAdapterComprar.
 
         final Book book = listaBooks.get(i);
         myViewHolder.title.setText(book.getTitle());
-        myViewHolder.price.setText(String.format("R$: %s", book.getPrice()));
+        myViewHolder.price.setText(String.valueOf(book.getPrice()));
         myViewHolder.writer.setText(book.getWriter());
 
         String url =  book.getThumbnailHd();
@@ -52,14 +52,7 @@ public class BookAdapterComprar extends RecyclerView.Adapter<BookAdapterComprar.
         return listaBooks.size();
     }
 
-//    Método responsável por remover um item da lista.
-//    private void removerItem(int position) {
-//        listaBooks.remove(position);
-//        notifyItemRemoved(position);
-//        notifyItemRangeChanged(position, listaBooks.size());
-//    }
-
-    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView    title;
         private TextView    price;
@@ -76,7 +69,7 @@ public class BookAdapterComprar extends RecyclerView.Adapter<BookAdapterComprar.
             title = itemView.findViewById(R.id.textTitle);
             price = itemView.findViewById(R.id.textPrice);
             writer = itemView.findViewById(R.id.textWriter);
-            //private TextView    date;
+
             ImageButton buttonComprar = itemView.findViewById(R.id.buttonComprar);
 
             buttonComprar.setOnClickListener(this);
